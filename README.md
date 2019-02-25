@@ -1,2 +1,3 @@
 # SkyBlue-Adventure
-DirectX9.0で作った2Dシューティングゲーム
+
+ゲームプレイ動画：https://youtu.be/G7QzqE4HeLA
