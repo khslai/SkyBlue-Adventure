@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // アイテム処理 [Item.cpp]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #include "main.h"
@@ -13,28 +13,38 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+// アイテムが自動的に吸収されるボーダーラインの座標
 #define AttractBorderline (Screen_Width * 0.65)
+// プレイヤーがアイテムを吸収する半径
 #define PlayerAttractRadius (80)
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 頂点の作成
 HRESULT MakeItemVertex(int Item_No);
-void SetItemTexture(int Item_No);
+// 頂点座標の設定
 void SetItemVertex(int Item_No);
+// テクスチャ座標の設定
+void SetItemTexture(int Item_No);
+// 色、透明度の設定
 void SetItemDiffuse(int Item_No, int Color);
+// アイテムの回転、移動、吸収の計算
 void CalculateItem(int Item_No);
-
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
+// テクスチャのポインタ
 static LPDIRECT3DTEXTURE9 HPTexture = NULL;
 static LPDIRECT3DTEXTURE9 ScoreTexture = NULL;
 static LPDIRECT3DTEXTURE9 PowerTexture = NULL;
 static LPDIRECT3DTEXTURE9 BackGroundTexture = NULL;
+// テクスチャ半径
 static float ItemRadius = 0.0f;
+// 中心点と四頂点の成す角
 static float ItemBaseAngle = 0.0f;
+// アイテム構造体
 ITEM Item[ItemNum_Max];
 
 
@@ -167,7 +177,7 @@ void DrawItem(void)
 }
 
 //=============================================================================
-// アイテムの計算
+// アイテムの回転、移動、吸収の計算
 //=============================================================================
 void CalculateItem(int Item_No)
 {
@@ -221,10 +231,6 @@ void CalculateItem(int Item_No)
 	{
 		Item[Item_No].Use = false;
 	}
-	//if (CheckRange(OutOfRange, Item[Item_No].Pos, Texture_HPItem_Width, Texture_HPItem_Height) == true)
-	//{
-	//	Item[Item_No].Use = false;
-	//}
 
 	Item[Item_No].Count++;
 
@@ -240,7 +246,7 @@ ITEM *GetItem(int Item_No)
 }
 
 //=============================================================================
-// プレイヤーが撃たれた時のアイテム設置
+// プレイヤーが撃たれた時、ドロップアイテムの設置
 //=============================================================================
 void SetPlayerItem(D3DXVECTOR3 Pos)
 {
@@ -289,7 +295,7 @@ void SetPlayerItem(D3DXVECTOR3 Pos)
 }
 
 //=============================================================================
-// エネミー死亡する時のアイテム設置
+// エネミー死亡する時、ドロップアイテムの設置
 //=============================================================================
 void SetEnemyItem(D3DXVECTOR3 Pos, int ItemType[], int ItemNum)
 {
@@ -346,7 +352,7 @@ void SetEnemyItem(D3DXVECTOR3 Pos, int ItemType[], int ItemNum)
 }
 
 //=============================================================================
-// ボスが倒す時のアイテム設置
+// ボス撃破する時、ドロップアイテムの設置
 //=============================================================================
 void SetBossItem(D3DXVECTOR3 Pos)
 {
@@ -397,7 +403,7 @@ void SetBossItem(D3DXVECTOR3 Pos)
 }
 
 //=============================================================================
-// ボスの弾が消える時のアイテム設置
+// ボス撃破する時、バレットがスコアアイテムになる
 //=============================================================================
 void SetBossBulletItem(D3DXVECTOR3 Pos)
 {

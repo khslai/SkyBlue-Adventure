@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ボス練習モード処理 [BossPratice.cpp]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #include "main.h"
@@ -30,8 +30,6 @@
 #define ResumePos_Y			(350)
 #define RestartPos_Y		(450)
 #define ToTitlePos_Y		(550)
-//#define ResumePos_Y			(384)
-//#define ToTitlePos_Y		(512)
 #define AskSentencePos_Y	(200)
 #define YesNoPos_Y			(450)
 #define YesPos_X			(256)
@@ -54,19 +52,27 @@ enum BossPraticePhase
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 頂点の作成
 HRESULT MakeBossPraticeVertex(void);
-void SetBossPraticeTexture(void);
+// 頂点座標の設定
 void SetBossPraticeVertex(void);
+// テクスチャ座標の設定
+void SetBossPraticeTexture(void);
+// プレイヤーとボスの設置
 void SetBossPratice(void);
-
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-static VERTEX_2D BlackScreenVertexWk[NUM_VERTEX];
+// メニュー画面頂点
+static VERTEX_2D BlackScreenVertexWk[Num_Vertex];
+// 背景テクスチャ
 LPDIRECT3DTEXTURE9 BossPraticeBGTexture = NULL;
+// 背景構造体
 static BACKGROUND BossPraticeBG;
+// 選択肢
 static SELECT BossPraticeSelect;
+// 画面揺れるの移動量
 static D3DXVECTOR2 ShakePos = D3DXVECTOR2(0.0f, 0.0f);
 
 //=============================================================================
@@ -507,7 +513,7 @@ void DrawBossPraticeMenu(void)
 }
 
 //=============================================================================
-// プレイヤーとエネミーの設置
+// プレイヤーとボスの設置
 //=============================================================================
 void SetBossPratice(void)
 {

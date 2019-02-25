@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // チュートリアル処理 [Tutorial.cpp]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #include "main.h"
@@ -14,12 +14,14 @@
 #include "BackGround.h"
 #include "Transition.h"
 
-
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+// 背景スクロール速度
 #define BGSpeed (0.001f)
+// テキスト矩形の高さ
 #define RectHeight (100)
+// テキスト表示の座標
 #define HelpPos_Y (550)
 #define ExitTutorialPos_Y (650)
 #define AskSentencePos_Y (200)
@@ -31,22 +33,29 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 頂点の作成
 HRESULT MakeTutorialVertex(void);
-void SetTutorialTexture(void);
+// 頂点座標の設定
 void SetTutorialVertex(void);
+// テクスチャ座標の設定
+void SetTutorialTexture(void);
+// プレイヤーとエネミーの設置
 void SetTutorial(void);
-
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-static VERTEX_2D BlackScreenVertexWk[NUM_VERTEX];
-VERTEX_2D TutorialVertexWk[NUM_VERTEX];
+// 頂点情報格納ワーク
+static VERTEX_2D BlackScreenVertexWk[Num_Vertex];
+VERTEX_2D TutorialVertexWk[Num_Vertex];
+// テクスチャのポインタ
 LPDIRECT3DTEXTURE9 TutorialBGTexture = NULL;
 LPDIRECT3DTEXTURE9 Tutorial1_Keyboard_Texture = NULL;
 LPDIRECT3DTEXTURE9 Tutorial1_GamePad_Texture = NULL;
 LPDIRECT3DTEXTURE9 Tutorial2Texture = NULL;
+// 背景構造体
 static BACKGROUND TutorialBG;
+// チュートリアル選択肢構造体
 static SELECT TutorialSelect;
 
 //=============================================================================

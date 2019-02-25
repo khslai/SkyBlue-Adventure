@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // エネミーヘッダー [Enemy.h]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #ifndef _ENEMY_H_
@@ -48,9 +48,22 @@
 #define Texture_Enemy04_Width			(Texture_Enemy04_Width_Total / Texture_Enemy04_Divide_X)
 #define Texture_Enemy04_Height			(Texture_Enemy04_Height_Total / Texture_Enemy04_Divide_Y)
 
+// エネミーの方向
+enum EnemyDirection
+{
+	Down,
+	Left,
+	Right,
+	Up,
+};
+
+//*****************************************************************************
+// 構造体定義
+//*****************************************************************************
+// エネミー構造体
 typedef struct
 {
-	VERTEX_2D		VertexWk[NUM_VERTEX];	// 頂点情報格納ワーク
+	VERTEX_2D		VertexWk[Num_Vertex];	// 頂点情報格納ワーク
 	D3DXVECTOR3		Pos;					// エネミーの座標
 	D3DXVECTOR3		Rot;					// テクスチャの回転角度
 	float			Speed;					// 移動スピード
@@ -77,24 +90,22 @@ typedef struct
 	bool			Exist;					// 存在かどうかのフラグ
 }ENEMY;
 
-// エネミーの方向
-enum EnemyDirection
-{
-	Down,
-	Left,
-	Right,
-	Up,
-};
-
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 初期化処理
 HRESULT InitEnemy(int InitState);
+// 終了処理
 void UninitEnemy(void);
+// 更新処理
 void UpdateEnemy(void);
+// 描画処理
 void DrawEnemy(void);
+// エネミーの情報を取得する
 ENEMY *GetEnemy(int Enemy_No);
+// エネミーの設置
 void SetEnemy(int Status_No);
+// エネミーの色の設定
 void SetEnemyColor(int Enemy_No, int Color);
 
 #endif

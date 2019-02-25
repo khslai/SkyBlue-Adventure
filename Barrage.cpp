@@ -1,7 +1,7 @@
 ﻿//=============================================================================
 //
 // エネミー弾幕処理 [Barrage.cpp]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #include "main.h"
@@ -21,14 +21,16 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 頂点の作成
 static HRESULT MakeBulletVertex(int Barrage_No, int Bullet_No);
-static void SetBulletTexture(int Barrage_No, int Bullet_No);
+// 頂点座標の設定
 static void SetBulletVertex(int Barrage_No, int Bullet_No);
+// テクスチャ座標の設定
+static void SetBulletTexture(int Barrage_No, int Bullet_No);
 // バレットの弾幕パターンを設置
 void BarragePattern(int Barrage_No, int Papptern_No);
 // 弾幕移動計算
 void BulletCalculate(int Barrage_No);
-
 
 //*****************************************************************************
 // グローバル変数
