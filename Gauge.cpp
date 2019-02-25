@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ゲージ処理 [Gauge.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -14,44 +14,37 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// ゲージテクスチャの最大数
 #define GaugeTexture_Max	(3)
 
-// ゲージの種類
 enum
 {
-	PlayerHP,			// プレイヤーのHP
-	PlayerPower,		// プレイヤーのPower
-	BossHP,				// ボスのHP
-	PlayerHPBox,		// プレイヤーHPゲージの枠
-	PlayerPowerBox,		// プレイヤーPowerゲージの枠
-	BossHPBox,			// ボスHPゲージの枠
+	PlayerHP,
+	PlayerPower,
+	BossHP,
+	PlayerHPBox,
+	PlayerPowerBox,
+	BossHPBox,
 };
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 頂点の作成
 HRESULT MakeGaugeVertex(GAUGE *GaugePtr);
-HRESULT MakeSymbolVertex(void);
-// 頂点座標の設定
-void SetGaugeVertex(GAUGE *GaugePtr);
-void SetSymbolVertex(void);
-// テクスチャ座標の設定
 void SetGaugeTexture(GAUGE *GaugePtr);
-void SetSymbolTexture(void);
-// 色、透明度の設定
+void SetGaugeVertex(GAUGE *GaugePtr);
 void SetGaugeDiffuse(GAUGE *GaugePtr, int Color);
+
+HRESULT MakeSymbolVertex(void);
+void SetSymbolTexture(void);
+void SetSymbolVertex(void);
 
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// テクスチャのポインタ
 LPDIRECT3DTEXTURE9 GaugeBoxTexture[GaugeTexture_Max] = { NULL };
 LPDIRECT3DTEXTURE9 GaugeTexture[GaugeTexture_Max] = { NULL };
 LPDIRECT3DTEXTURE9 BombSymbolTexture = NULL;
-// ゲージ構造体
 GAUGE PlayerHPGauge;
 GAUGE PlayerHPGaugeBox;
 GAUGE PlayerPowerGauge;
@@ -59,7 +52,6 @@ GAUGE PlayerPowerGaugeBox;
 GAUGE PlayerBombSymbol[PlayerBomb_Max];
 GAUGE BossHPGauge;
 GAUGE BossHPGaugeBox;
-// ゲージのパーセント
 float GaugePercent_PlayerHP = 1.0f;
 float GaugePercent_PlayerPower = PlayerStartPower / PlayerPower_Max;
 float GaugePercent_BossHP = 1.0f;

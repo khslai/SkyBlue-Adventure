@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 自機選択処理 [SelectChar.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -18,11 +18,8 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// アニメーションを切り替えるカウント
 #define AnimChangeCount (15)
-// テキスト矩形の高さ
 #define RectHeight (100)
-// テキスト表示の座標
 #define TitlePos_Y (50)
 #define OptionPos_Y	(150)
 #define AskSentencePos_Y (200)
@@ -35,30 +32,23 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 頂点の作成
 HRESULT MakeSelectCharVertex(void);
-// 頂点座標の設定
-void SetSelectCharVertex(void);
-// テクスチャ座標の設定
 void SetSelectCharTexture(void);
-// 色、透明度の設定
-void SetEnemyColor(void);
-// プレイヤーとエネミーの設置
+void SetSelectCharVertex(void);
 void SetObject(void);
+void SetEnemyColor(void);
 
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// テクスチャのポインタ
 LPDIRECT3DTEXTURE9 SelectBGTexture = NULL;
 LPDIRECT3DTEXTURE9 DrawBoxTexture = NULL;
-// 頂点情報格納ワーク
-VERTEX_2D SelectBGVertexWk[Num_Vertex];
-VERTEX_2D DrawBoxVertexWk[Num_Vertex];
-static VERTEX_2D BlackScreenVertexWk[Num_Vertex];
-// 自機タイプ選択肢
+VERTEX_2D SelectBGVertexWk[NUM_VERTEX];
+VERTEX_2D DrawBoxVertexWk[NUM_VERTEX];
+static VERTEX_2D BlackScreenVertexWk[NUM_VERTEX];
 static SELECT SelectChar;
+
 
 //=============================================================================
 // 初期化処理

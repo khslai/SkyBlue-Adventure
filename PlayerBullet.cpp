@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // プレイヤー弾幕処理 [PlayerBullet.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -16,47 +16,40 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// プレイヤーの弾のダメージ
 #define PlayerBulletDamage (4)
-// プレイヤーの弾の移動速度
 #define PlayerBulletSpeed (20.0f)
 
-// 弾の種類
 enum BulletType
 {
-	PlayerBullet,	// プレイヤーが発射する弾
-	OptionBullet,	// オプションが発射する弾
+	PlayerBullet,
+	OptionBullet,
 };
 
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 頂点の作成
 static HRESULT MakeBulletVertex(int Bullet_No);
-// 頂点座標の設定
-static void SetBulletVertex(int Bullet_No);
-// テクスチャ座標の設定
 static void SetBulletTexture(int Bullet_No);
-// 自機Bタイプの弾のホーミングを計算
+static void SetBulletVertex(int Bullet_No);
+void PlayerShot(void);
 void CalculateHoming(int Bullet_No);
+
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// テクスチャのポインタ
-LPDIRECT3DTEXTURE9 Bullet_ATexture = NULL;
-LPDIRECT3DTEXTURE9 Bullet_BTexture = NULL;
-LPDIRECT3DTEXTURE9 OptionBullet_ATexture = NULL;
-LPDIRECT3DTEXTURE9 OptionBullet_BTexture = NULL;
-// プレイヤーのパワーによって、弾のダメージ倍率
+static LPDIRECT3DTEXTURE9 Bullet_ATexture = NULL;
+static LPDIRECT3DTEXTURE9 Bullet_BTexture = NULL;
+static LPDIRECT3DTEXTURE9 OptionBullet_ATexture = NULL;
+static LPDIRECT3DTEXTURE9 OptionBullet_BTexture = NULL;
+// 弾のダメージ倍率
 const float ShotDamageRate[4] = { 1.0f, 1.2f, 1.3f, 1.5f };
-// ホーミング弾のダメージ係数
 const float HomingDamageRate = 0.15f;
-// プレイヤー弾発射位置(Pos.x + 10, Pos.y - 20) , (Pos.x + 10, Pos.y + 20)
+// 弾発射位置(Pos.x + 10, Pos.y - 20) , (Pos.x + 10, Pos.y + 20)
 const int PlayerShot_x[2] = { 10, 10 };
 const int PlayerShot_y[2] = { -20, 20 };
-// オプション弾の発射角度(Pos.x + 10, Pos.y - 20) , (Pos.x + 10, Pos.y + 20)
+// オプション弾発射角度(Pos.x + 10, Pos.y - 20) , (Pos.x + 10, Pos.y + 20)
 const int OptionAngle[4] = { -30, 30, -60, 60 };
 const int OptionAngle_LowSpeed[4] = { 0, 0, -15, 15 };
 

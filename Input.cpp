@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // キー入力処理 [Input.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -534,13 +534,13 @@ void UpdatePad(void)
 		}
 
 		// ３２の各ビットに意味を持たせ、ボタン押下に応じてビットをオンにする
-		// 左スティック(上)
+		// y-axis (forward)
 		if (dijs.lY < 0)					padState[i] |= BUTTON_UP;
-		// 左スティック(下)
+		// y-axis (backward)
 		if (dijs.lY > 0)					padState[i] |= BUTTON_DOWN;
-		// 左スティック(左)
+		// x-axis (left)
 		if (dijs.lX < 0)					padState[i] |= BUTTON_LEFT;
-		// 左スティック(右)
+		// x-axis (right)
 		if (dijs.lX > 0)					padState[i] |= BUTTON_RIGHT;
 		// 十字キー(上)
 		if (dijs.rgdwPOV[0] == 0)			padState[i] |= BUTTON_UP;
@@ -566,10 +566,10 @@ void UpdatePad(void)
 		if (dijs.rgbButtons[2] & 0x80)		padState[i] |= BUTTON_X;
 		// Ｙボタン
 		if (dijs.rgbButtons[3] & 0x80)		padState[i] |= BUTTON_Y;
-		// ＬＢボタン
-		if (dijs.rgbButtons[4] & 0x80)		padState[i] |= BUTTON_LB;
-		// ＲＢボタン
-		if (dijs.rgbButtons[5] & 0x80)		padState[i] |= BUTTON_RB;
+		// Ｌボタン
+		if (dijs.rgbButtons[4] & 0x80)		padState[i] |= BUTTON_L;
+		// Ｒボタン
+		if (dijs.rgbButtons[5] & 0x80)		padState[i] |= BUTTON_R;
 		// ＳＴＡＲＴボタン
 		if (dijs.rgbButtons[7] & 0x80)		padState[i] |= BUTTON_START;
 
@@ -630,7 +630,7 @@ BOOL IsButtonRepeat(int Pad_No, DWORD Button)
 }
 
 //=============================================================================
- // ゲームパッドの使用フラグを取得する
+// ゲームパッド中かどうかの状態を取得
 //=============================================================================
 BOOL GetGamePadUsed(void)
 {

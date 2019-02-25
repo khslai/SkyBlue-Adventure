@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // レーザー処理 [Laser.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -23,7 +23,6 @@
 // レーザー最大発射数 = Laser_Num_Max * 2
 #define Laser_Num_Max (8)
 
-// レーザーの回転方向
 enum
 {
 	Clockwise = 1,
@@ -33,25 +32,17 @@ enum
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 頂点の作成
 HRESULT MakeLaserVertex(int	Laser_No);
-// 頂点座標の設定
-void SetLaserVertex(int Laser_No);
-// テクスチャ座標の設定
 void SetLaserTexture(int Laser_No);
-// レーザーの回転、移動を計算する
+void SetLaserVertex(int Laser_No);
 void CalculateLaserRotate(int Laser_No);
-// レーザーの当たり判定用矩形を計算する
 void CalculateLaserRect(D3DXVECTOR3 Pos, float Length);
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// テクスチャのポインタ
 LPDIRECT3DTEXTURE9 LaserTexture = NULL;
-// レーザー構造体
 LASER Laser[Laser_Max];
-// 表示しているレーザーの数
 int Laser_Num = 0;
 
 

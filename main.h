@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // Mainヘッダー [main.h]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #ifndef _MAIN_H_
@@ -9,7 +9,7 @@
 
 
 //*****************************************************************************
-// インクルードファイル
+// マクロ定義
 //*****************************************************************************
 #define _CRT_SECURE_NO_WARNINGS			// scanf のwarning防止
 
@@ -25,9 +25,6 @@
 #include <dinput.h>
 #include <mmsystem.h>
 
-//*****************************************************************************
-// ライブラリのリンク
-//*****************************************************************************
 #if 1	// [ここを"0"にした場合、"構成プロパティ" -> "リンカ" -> "入力" -> "追加の依存ファイル"に対象ライブラリを設定する]
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
@@ -37,9 +34,6 @@
 #pragma comment (lib, "dsound.lib")
 #endif
 
-//*****************************************************************************
-// マクロ定義
-//*****************************************************************************
 // UI
 #define Screen_Width		(1024)					// ウインドウの幅
 #define Screen_Height		(768)					// ウインドウの高さ
@@ -99,10 +93,17 @@
 #define Root2				(1.414214f)
 #define TextureDevideNum	(50)					// ポリゴン分割の数
 
+
 // 頂点数
-#define	Num_Vertex			(4)					
+#define	NUM_VERTEX			(4)					
 // ポリゴン数
 #define Num_Polygon			(2)
+#define	NUM_PLAYER			(2)					
+#define NUM_ENEMY			(2)
+#define NUM_BG				(2)
+#define NUM_BULLET			(2)
+#define NUM_SCORE			(2)
+#define NUM_TITLE			(2)
 
 // 色
 #define WHITE(Alpha)		D3DCOLOR_RGBA(255, 255, 255, Alpha)
@@ -129,6 +130,7 @@ const int OptionPos_y[2] = { -50, 50 };
 const int OptionPos_x_LowSpeed[2] = { 30, 30 };
 const int OptionPos_y_LowSpeed[2] = { -40, 40 };
 
+
 // 頂点フォーマット( 頂点座標[2D] / 反射光 / テクスチャ座標 )
 #define	FVF_VERTEX_2D	(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
@@ -136,6 +138,23 @@ const int OptionPos_y_LowSpeed[2] = { -40, 40 };
 #define SafeRelease(ReleaseObject) { if(ReleaseObject != NULL) { ReleaseObject->Release(); ReleaseObject = NULL; } }
 // 角度をラジアンに変換する
 #define DegreeToRadian(Degree)	(Degree) * (0.017456f)
+
+// 上記頂点フォーマットに合わせた構造体を定義
+typedef struct
+{
+	D3DXVECTOR3		vtx;					// 頂点座標
+	float			rhw;					// テクスチャのパースペクティブコレクト用
+	D3DCOLOR		diffuse;				// 反射光
+	D3DXVECTOR2		tex;					// テクスチャ座標
+} VERTEX_2D;
+
+typedef struct
+{
+	VERTEX_2D		VertexWk[NUM_VERTEX];	// 頂点情報格納ワーク
+	D3DXVECTOR3		Pos;					// 座標
+	int				Phase;					// 今指す選択肢
+	bool			InYes;					// 答えは"YES"か"No"か
+}SELECT;
 
 // 背景の状態
 enum BGState
@@ -315,59 +334,23 @@ enum BossPhase
 };
 
 //*****************************************************************************
-// 構造体定義
-//*****************************************************************************
-// 上記頂点フォーマットに合わせた構造体を定義
-typedef struct
-{
-	D3DXVECTOR3		vtx;					// 頂点座標
-	float			rhw;					// テクスチャのパースペクティブコレクト用
-	D3DCOLOR		diffuse;				// 反射光
-	D3DXVECTOR2		tex;					// テクスチャ座標
-} VERTEX_2D;
-
-// 選択肢構造体
-typedef struct
-{
-	VERTEX_2D		VertexWk[Num_Vertex];	// 頂点情報格納ワーク
-	D3DXVECTOR3		Pos;					// 座標
-	int				Phase;					// 今指す選択肢
-	bool			InYes;					// 答えは"YES"か"No"か
-}SELECT;
-
-
-//*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 // デバイス取得関数
 LPDIRECT3DDEVICE9 GetDevice(void);
-// UIテクスチャ取得関数
 LPDIRECT3DTEXTURE9 GetUITexture(int UITextureType);
-// テキストフォント取得関数
 LPD3DXFONT GetFont(int FontType);
-// 描画ライン取得関数
 LPD3DXLINE GetLine(void);
-// GameCount取得関数
 int GetGameCount(void);
-// FPS取得関数
 int GetFPSCount(void);
-// ゲームステージ取得関数
 int GetGameStage(void);
-// ゲーム難易度取得関数
 int GetGameDiffuculty(void);
-// ゲーム難易度設定関数
 void SetGameDiffuculty(int DifficultyMode);
-// ゲームステージ設定関数（画面遷移）
 void SetGameStage(int Stage);
-// ゲームの再初期化
 void ReInitGame(bool InitSound);
-// 弾はスクリーンの範囲内かどうかをチェック
 bool CheckRange(int CheckMode, D3DXVECTOR3 Pos, int Width, int Height);
-// テクスチャ読み込む関数
 bool SafeLoad(LPCSTR SrcFile, LPDIRECT3DTEXTURE9* TexturePtr, const char* ErrorSrc);
-// 二つの座標の移動角度を計算する
 float AngleCalculate(D3DXVECTOR3 ReferencePos, D3DXVECTOR3 ObjectPos);
-// +Radian ~ -Radianランダムなラジアンを返す
 float RandRadian(float Radian);
 
 #endif

@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // スコア処理 [Score.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -12,28 +12,22 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// スコアの桁数
 #define DigitMax (10)
-// スコアの最大値
 #define ScoreMax (9999999999)
 
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 頂点の作成
 HRESULT MakeScoreVertex(int ScoreDigit, int ScoreNum);
-// 頂点座標の設定
-void SetScoreVertex(int ScoreDigit);
-// テクスチャ座標の設定
 void SetScoreTexture(int ScoreDigit, int ScoreNum);
+void SetScoreVertex(int ScoreDigit);
+
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// テクスチャのポインタ
-LPDIRECT3DTEXTURE9 ScoreTexture = NULL;
-// スコア構造体
+static LPDIRECT3DTEXTURE9 ScoreTexture = NULL;
 SCORE Score[DigitMax];
 
 //=============================================================================
@@ -113,7 +107,7 @@ void DrawScore(void)
 		Device->SetTexture(0, ScoreTexture);
 
 		// ポリゴンの描画
-		Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, Score[ScoreDigit].VertexWk, sizeof(VERTEX_2D));
+		Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_SCORE, Score[ScoreDigit].VertexWk, sizeof(VERTEX_2D));
 	}
 
 	return;
@@ -176,7 +170,7 @@ void SetScoreVertex(int ScoreDigit)
 }
 
 //=============================================================================
-// スコア加算
+// スコアの計算
 //=============================================================================
 void AddScore(int Score)
 {

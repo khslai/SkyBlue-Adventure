@@ -1,7 +1,7 @@
 ﻿//=============================================================================
 //
 // エネミー処理 [Enemy.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -15,30 +15,24 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// アニメーションを切り替えるカウント
 #define AnimChangeCount (15)
 
-// エネミー移動パターン9、10番の状態
 enum
 {
-	Debut,			// エネミー登場
-	FirstRotate,	// 第一回回転
-	FirstRotEnd,	// 回転終了
-	SecondRotate,	// 第二回回転
-	EnemyExit,		// 移動終了
+	Debut,
+	FirstRotate,
+	FirstRotEnd,
+	SecondRotate,
+	EnemyExit,
 };
 
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 頂点の作成
 HRESULT MakeEnemyVertex(int Enemy_No);
-// 頂点座標の設定
 void SetEnemyVertex(int Enemy_No);
-// テクスチャ座標の設定
 void SetEnemyTexture(int Enemy_No);
-// エネミーの移動パターン
 void EnemyMove(int Enemy_No, int Pattern_No);
 
 
@@ -47,17 +41,13 @@ void EnemyMove(int Enemy_No, int Pattern_No);
 //*****************************************************************************
 // テクスチャへのポインタ
 LPDIRECT3DTEXTURE9 EnemyTexture[EnemyType_Max] = { NULL };
-// テクスチャ半径
 static float Radius[EnemyType_Max] = { 0.0f };
-// 当たり判定の半径
 static float HitRadius[EnemyType_Max] = { 0.0f };
-// 中心点と四頂点の成す角
 static float BaseAngle[EnemyType_Max] = { 0.0f };
-// テクスチャ半径拡大の倍率
+// テクスチャ拡大の倍率
 static const float RadiusZoomRate[EnemyType_Max] = { 1.2f, 1.2f, 1.5f, 1.6f, 1.6f };
-// 当たり判定の半径拡大の倍率、HR = HitRadius
+// HR = HitRadius
 static const float HRZoomRate[EnemyType_Max] = { 0.6f, 0.6f, 0.5f, 0.5f, 0.5f };
-// エネミー構造体
 ENEMY Enemy[Enemy_Max];
 
 //=============================================================================
@@ -314,7 +304,7 @@ void DrawEnemy(void)
 				}
 
 				// ポリゴンの描画
-				Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, Enemy[Enemy_No].VertexWk, sizeof(VERTEX_2D));
+				Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_ENEMY, Enemy[Enemy_No].VertexWk, sizeof(VERTEX_2D));
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ボムヘッダー [Bomb.h]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #ifndef _BOMB_H_
@@ -32,23 +32,9 @@
 #define Texture_BombBullet_Width		(32)
 #define Texture_BombBullet_Height		(32)
 
-
-// ボムの弾の状態
-enum BombBulletState
-{
-	Homing,				// ホーミング
-	Explosion,			// 命中時の爆発
-	Over,				// 終了
-	BulletDisspappear,	// 目標消えた、弾消失
-};
-
-//*****************************************************************************
-// 構造体定義
-//*****************************************************************************
-// ロックオン構造体
 typedef struct
 {
-	VERTEX_2D		VertexWk[Num_Vertex];			// 頂点情報格納ワーク
+	VERTEX_2D		VertexWk[NUM_VERTEX];			// 頂点情報格納ワーク
 	D3DXVECTOR3		Pos;							// 座標
 	float			Radius;							// 画像中心から頂点までの距離
 	float			BaseAngle;						// 画像中心から頂点までの角度
@@ -56,10 +42,9 @@ typedef struct
 	bool			Use;							// 使用フラグ
 }LOCKON;
 
-// ボム構造体
 typedef struct
 {
-	VERTEX_2D		VertexWk[Num_Vertex];			// 頂点情報格納ワーク
+	VERTEX_2D		VertexWk[NUM_VERTEX];			// 頂点情報格納ワーク
 	D3DXVECTOR3		Pos;							// 座標
 	D3DXVECTOR3		ShakePos;						// 画面揺れる効果用座標
 	D3DXVECTOR3		Rot;							// テクスチャの回転角度
@@ -78,22 +63,24 @@ typedef struct
 	bool			Use;							// 使用フラグ
 }BOMB;
 
+// ボムの弾の状態
+enum BombBulletState
+{
+	Homing,
+	Explosion,
+	Over,
+	BulletDisspappear,
+};
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 初期化処理
 HRESULT InitBomb(int InitState);
-// 終了処理
 void UninitBomb(void);
-// 更新処理
 void UpdateBomb(void);
-// 描画処理
 void DrawBomb(void);
-// ボス（タイプA）の設置
 void SetBomb_A(void);
-// ボス（タイプB）の設置
 void SetBomb_B(void);
-// ボムの情報を取得する
 BOMB *GetBomb(void);
 
 #endif

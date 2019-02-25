@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 練習弾幕選択処理 [PraticeSelect.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -19,14 +19,11 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// 矢印の表示座標
-#define UpDownArrowPos_Y	(200)
-// テキスト矩形の高さ
-#define RectHeight			(100)
-// テキスト表示座標
-#define TitlePos_Y			(50)
-#define OptionPos_Y			(150)
-#define ReferencePos_Y		(170)
+#define UpDownArrowPos_Y (200)
+#define RectHeight (100)
+#define TitlePos_Y (50)
+#define OptionPos_Y	(150)
+#define ReferencePos_Y (170)
 
 
 
@@ -34,27 +31,20 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 頂点の作成
 HRESULT MakePraticeSelectVertex(void);
-// 頂点座標の設定
-void SetPraticeSelectVertex(void);
-// テクスチャ座標の設定
 void SetPraticeSelectTexture(void);
+void SetPraticeSelectVertex(void);
+
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// メニュー画面頂点
-VERTEX_2D PraticeSelectBGVertexWk[Num_Vertex];
-// 選択肢画像頂点
-VERTEX_2D PraticeSelectDrawBoxVertexWk[Num_Vertex];
-// 矢印画像頂点
-VERTEX_2D UpDownArrowVertexWk[Num_Vertex];
-// テクスチャのポインタ
+VERTEX_2D PraticeSelectBGVertexWk[NUM_VERTEX];
+VERTEX_2D PraticeSelectDrawBoxVertexWk[NUM_VERTEX];
+VERTEX_2D UpDownArrowVertexWk[NUM_VERTEX];
 LPDIRECT3DTEXTURE9 PraticeSelectSelectBGTexture = NULL;
 LPDIRECT3DTEXTURE9 PraticeSelectDrawBoxTexture = NULL;
 LPDIRECT3DTEXTURE9 UpDownArrowTexture = NULL;
-// 選択肢の状態
 int PraticeSelectPhase = 0;
 
 //=============================================================================

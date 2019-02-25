@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // デバッグテスト処理 [DebugTest.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -16,34 +16,24 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// 当たり範囲表示の最大値
 #define HitCircle_Max (999)
-// 当たり範囲のアルファ値
 #define HitCircle_Alpha (200)
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 // HC = HitCircle
-// 頂点の作成
 HRESULT MakeHCVertex(int HitCircle_No);
-// 頂点座標の設定
-void SetHCVertex(int HitCircle_No);
-// テクスチャ座標の設定
 void SetHCTexture(int HitCircle_No);
-// 当たり範囲更新処理
+void SetHCVertex(int HitCircle_No);
 void UpdateHitCircle(void);
-// 当たり範囲描画処理
 void DrawHitCircle(void);
-// FPS表示処理
 void DrawFPS(void);
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// テクスチャのポインタ
 LPDIRECT3DTEXTURE9 HCTexture = NULL;
-// 当たり範囲構造体
 HITCIRCLE HitCircle[HitCircle_Max];
 
 //=============================================================================
@@ -110,14 +100,11 @@ void UpdateDebugTest(void)
 //=============================================================================
 void DrawDebugTest(void)
 {
-
-#if _DEBUG
 	// 当たり範囲表示
-	DrawHitCircle();
+	//DrawHitCircle();
 
 	// FPS表示
-	DrawFPS();
-#endif
+	//DrawFPS();
 
 	return;
 }
@@ -141,13 +128,10 @@ void UpdateHitCircle(void)
 	{
 		if (HitCircle[HitCircle_No].Use == true)
 		{
-			// 当たり範囲の所有者によって、違う処理を行う
-			// プレイヤー
 			if (HitCircle[HitCircle_No].Owner == PlayerHC)
 			{
 				HitCircle[HitCircle_No].Pos = Player->Pos;
 			}
-			// プレイヤーの弾
 			else if (HitCircle[HitCircle_No].Owner == PlayerBulletHC)
 			{
 				for (Bullet_No = 0; Bullet_No < PlayerBullet_Max; Bullet_No++)
@@ -166,7 +150,6 @@ void UpdateHitCircle(void)
 					}
 				}
 			}
-			// ボム
 			else if (HitCircle[HitCircle_No].Owner == BombHC)
 			{
 				if (Bomb->Use == true)
@@ -179,7 +162,6 @@ void UpdateHitCircle(void)
 					HitCircle[HitCircle_No].Use = false;
 				}
 			}
-			// エネミー
 			else if (HitCircle[HitCircle_No].Owner == EnemyHC)
 			{
 				Enemy = GetEnemy(0);
@@ -199,7 +181,6 @@ void UpdateHitCircle(void)
 					}
 				}
 			}
-			// エネミーの弾
 			else if (HitCircle[HitCircle_No].Owner == EnemyBulletHC)
 			{
 				Barrage = GetBarrage(0);
@@ -233,7 +214,6 @@ void UpdateHitCircle(void)
 					}
 				}
 			}
-			// ボス
 			else if (HitCircle[HitCircle_No].Owner == BossHC)
 			{
 				if (Boss->Exist == true)
@@ -245,7 +225,6 @@ void UpdateHitCircle(void)
 					HitCircle[HitCircle_No].Use = false;
 				}
 			}
-			// ボスの弾
 			else if (HitCircle[HitCircle_No].Owner == BossBulletHC)
 			{
 				for (Bullet_No = 0; Bullet_No < BossBullet_Max; Bullet_No++)
@@ -264,7 +243,7 @@ void UpdateHitCircle(void)
 				}
 			}
 
-			// 頂点座標の更新
+			SetHCTexture(HitCircle_No);
 			SetHCVertex(HitCircle_No);
 		}
 	}
@@ -358,10 +337,21 @@ void SetHCVertex(int HitCircle_No)
 		HitCircle[HitCircle_No].Pos.x + HitCircle[HitCircle_No].Radius;
 	HitCircle[HitCircle_No].VertexWk[3].vtx.y =
 		HitCircle[HitCircle_No].Pos.y + HitCircle[HitCircle_No].Radius;
+
+	/*
+	HitCircle[HitCircle_No].VertexWk[0].vtx.x = HitCircle[HitCircle_No].Pos.x - cosf(HitCircle[HitCircle_No].BaseAngle + HitCircle[HitCircle_No].Rot.z) * HitCircle[HitCircle_No].Radius * Root2;
+	HitCircle[HitCircle_No].VertexWk[0].vtx.y = HitCircle[HitCircle_No].Pos.y - sinf(HitCircle[HitCircle_No].BaseAngle + HitCircle[HitCircle_No].Rot.z) * HitCircle[HitCircle_No].Radius * Root2;
+	HitCircle[HitCircle_No].VertexWk[1].vtx.x = HitCircle[HitCircle_No].Pos.x + cosf(HitCircle[HitCircle_No].BaseAngle - HitCircle[HitCircle_No].Rot.z) * HitCircle[HitCircle_No].Radius * Root2;
+	HitCircle[HitCircle_No].VertexWk[1].vtx.y = HitCircle[HitCircle_No].Pos.y - sinf(HitCircle[HitCircle_No].BaseAngle - HitCircle[HitCircle_No].Rot.z) * HitCircle[HitCircle_No].Radius * Root2;
+	HitCircle[HitCircle_No].VertexWk[2].vtx.x = HitCircle[HitCircle_No].Pos.x - cosf(HitCircle[HitCircle_No].BaseAngle - HitCircle[HitCircle_No].Rot.z) * HitCircle[HitCircle_No].Radius * Root2;
+	HitCircle[HitCircle_No].VertexWk[2].vtx.y = HitCircle[HitCircle_No].Pos.y + sinf(HitCircle[HitCircle_No].BaseAngle - HitCircle[HitCircle_No].Rot.z) * HitCircle[HitCircle_No].Radius * Root2;
+	HitCircle[HitCircle_No].VertexWk[3].vtx.x = HitCircle[HitCircle_No].Pos.x + cosf(HitCircle[HitCircle_No].BaseAngle + HitCircle[HitCircle_No].Rot.z) * HitCircle[HitCircle_No].Radius * Root2;
+	HitCircle[HitCircle_No].VertexWk[3].vtx.y = HitCircle[HitCircle_No].Pos.y + sinf(HitCircle[HitCircle_No].BaseAngle + HitCircle[HitCircle_No].Rot.z) * HitCircle[HitCircle_No].Radius * Root2;
+	*/
 }
 
 //=============================================================================
-// プレイヤーの当たり範囲の設置
+// 当たり範囲の設置
 //=============================================================================
 void SetPlayerHC(D3DVECTOR Pos, float HitRadius, int Owner)
 {
@@ -384,7 +374,7 @@ void SetPlayerHC(D3DVECTOR Pos, float HitRadius, int Owner)
 }
 
 //=============================================================================
-// プレイヤー弾の当たり範囲の設置
+// 当たり範囲の設置
 //=============================================================================
 void SetPlayerBulletHC(D3DVECTOR Pos, float HitRadius, int Bullet_No, int Owner)
 {
@@ -408,7 +398,7 @@ void SetPlayerBulletHC(D3DVECTOR Pos, float HitRadius, int Bullet_No, int Owner)
 }
 
 //=============================================================================
-// ボムの当たり範囲の設置
+// 当たり範囲の設置
 //=============================================================================
 void SetBombHC(D3DVECTOR Pos, float HitRadius, int Owner)
 {
@@ -431,7 +421,7 @@ void SetBombHC(D3DVECTOR Pos, float HitRadius, int Owner)
 }
 
 //=============================================================================
-// エネミーの当たり範囲の設置
+// 当たり範囲の設置
 //=============================================================================
 void SetEnemyHC(D3DVECTOR Pos, float HitRadius, int Enemy_No, int Owner)
 {
@@ -455,7 +445,7 @@ void SetEnemyHC(D3DVECTOR Pos, float HitRadius, int Enemy_No, int Owner)
 }
 
 //=============================================================================
-// エネミー弾の当たり範囲の設置
+// 当たり範囲の設置
 //=============================================================================
 void SetEnemyBulletHC(D3DVECTOR Pos, float HitRadius, int Barrage_No, int Bullet_No, int Owner)
 {
@@ -480,7 +470,7 @@ void SetEnemyBulletHC(D3DVECTOR Pos, float HitRadius, int Barrage_No, int Bullet
 }
 
 //=============================================================================
-// ボスの当たり範囲の設置
+// 当たり範囲の設置
 //=============================================================================
 void SetBossHC(D3DVECTOR Pos, float HitRadius, int Owner)
 {
@@ -503,7 +493,7 @@ void SetBossHC(D3DVECTOR Pos, float HitRadius, int Owner)
 }
 
 //=============================================================================
-// ボス弾の当たり範囲の設置
+// 当たり範囲の設置
 //=============================================================================
 void SetBossBulletHC(D3DVECTOR Pos, float HitRadius, int Bullet_No, int Owner)
 {

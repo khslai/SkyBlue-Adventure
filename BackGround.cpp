@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 背景処理 [BackGround.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -16,16 +16,11 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// 背景スクロール速度
-#define BGSpeed				(0.001f)					
-// 夕方に変わる時間
-#define ToAfternoonCount	(5300)						
-// 夜に変わる時間
-#define ToNightCount		(8800)						
-// 一つの円の点の数（円の解像度）
-#define CircleResolution	(100)						
-// ゲームクリア演出の円の数
-#define GameClearCircleNum	(GameClearVertexDevide + 1)	
+#define BGSpeed				(0.001f)					// 背景スクロール速度
+#define ToAfternoonCount	(5300)						// 夕方に変わる時間
+#define ToNightCount		(8800)						// 夜に変わる時間
+#define CircleResolution	(100)						// 一つの円の点の数
+#define GameClearCircleNum	(GameClearVertexDevide + 1)	// ゲームクリアの円の数
 
 
 //*****************************************************************************
@@ -53,32 +48,20 @@ void DrawCircle(D3DXVECTOR2 Center, float Radius, D3DCOLOR Color, bool HalfCircl
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// テクスチャのポインタ
 LPDIRECT3DTEXTURE9 BGTexture[3] = { NULL };
 LPDIRECT3DTEXTURE9 GameStartTexture = NULL;
 LPDIRECT3DTEXTURE9 GameClearTexture = NULL;
-// 背景構造体
 BACKGROUND BackGround[3];
-// ゲームスタート構造体
 BACKGROUND GameStart_SkyBlue;
 BACKGROUND GameStart_White;
-// ゲームクリア構造体
 GAMECLEAR GameClear;
-// 背景のアルファ値
 static int Alpha = 255;
-// 円のアルファ値
 static int CircleAlpha = 255;
-// 背景の状態
 static int State = Day;
-// 背景変換する時、フェイドアウトのフラグ
 static bool BGFadeout = false;
-// 円の描画終了フラグ
 static bool DrawCircleOver = false;
-// 円の拡大終了フラグ
 static bool ExtendOver = false;
-// 円の拡大半径
 static float ExtendRadius = 0.0f;
-// 背景揺れる演出の移動座標
 static D3DXVECTOR2 ShakePos = D3DXVECTOR2(0.0f, 0.0f);
 
 //=============================================================================
@@ -386,13 +369,13 @@ void DrawBG(void)
 	// テクスチャの設定
 	Device->SetTexture(0, BGTexture[Day]);
 	// ポリゴンの描画
-	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, BackGround[Day].VertexWk, sizeof(VERTEX_2D));
+	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_BG, BackGround[Day].VertexWk, sizeof(VERTEX_2D));
 
 	Device->SetTexture(0, BGTexture[Afternoon]);
-	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, BackGround[Afternoon].VertexWk, sizeof(VERTEX_2D));
+	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_BG, BackGround[Afternoon].VertexWk, sizeof(VERTEX_2D));
 
 	Device->SetTexture(0, BGTexture[Night]);
-	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, BackGround[Night].VertexWk, sizeof(VERTEX_2D));
+	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_BG, BackGround[Night].VertexWk, sizeof(VERTEX_2D));
 
 	// プレイヤー状態描画
 	DrawInformation();
@@ -697,7 +680,7 @@ void DrawCircle(D3DXVECTOR2 Center, float Radius, D3DCOLOR Color, bool HalfCircl
 }
 
 //=============================================================================
-// 背景が揺れる演出の設置
+// 背景を揺れるの設置
 //=============================================================================
 void SetBGShake(bool InShake)
 {

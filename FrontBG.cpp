@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 前景処理 [FrontBG.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -11,28 +11,21 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// 前景スクロール速度
 #define FrontBGSpeed (0.005f)
 
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 頂点の作成
 HRESULT MakeFrontBGVertex(void);
-// 頂点座標の設定
-void SetFrontBGVertex(void);
-// テクスチャ座標の設定
 void SetFrontBGTexture(void);
-// 色、透明度の設定
 void SetFrontBGDiffuse(int Alpha);
+void SetFrontBGVertex(void);
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// テクスチャのポインタ
 LPDIRECT3DTEXTURE9 FrontBGTexture = NULL;
-// 前景構造体
 BACKGROUND FrontBG;
 
 //=============================================================================
@@ -109,7 +102,7 @@ void DrawFrontBG(void)
 	Device->SetTexture(0, FrontBGTexture);
 
 	// ポリゴンの描画
-	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, FrontBG.VertexWk, sizeof(VERTEX_2D));
+	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_BG, FrontBG.VertexWk, sizeof(VERTEX_2D));
 
 	// 本来の設置を戻す
 	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);

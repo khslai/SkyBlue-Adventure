@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 自機選択ヘッダー [SelectChar.h]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #ifndef _SELECTCHAR_H_
@@ -22,18 +22,16 @@
 #define DrawBox_X						(112)
 #define DrawBox_Y						(250)
 
+
+
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 初期化処理
 HRESULT InitSelectChar(int InitState);
-// 終了処理
 void UninitSelectChar(void);
-// 更新処理
 void UpdateSelectChar(void);
-// 背景描画処理
 void DrawSelectCharBG(void);
-// メニュー画面描画処理
 void DrawSelectCharMenu(void);
 
 #endif

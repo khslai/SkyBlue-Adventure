@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // エフェクトヘッダー [Effect.h]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #ifndef _EFFECT_H_
@@ -31,28 +31,23 @@
 #define Texture_BossBG_Star_Width		(200)
 #define Texture_BossBG_Star_Height		(200)
 
-//*****************************************************************************
-// 構造体定義
-//*****************************************************************************
-// エフェクト構造体
 typedef struct 
 {
-	VERTEX_2D		VertexWk[Num_Vertex];		// 頂点情報格納ワーク
+	VERTEX_2D		VertexWk[NUM_VERTEX];		// 頂点情報格納ワーク
 	D3DXVECTOR3		Pos;						// 座標
 	D3DXVECTOR3		Rot;						// テクスチャの回転角度
 	float			Radius;						// 画像中心から頂点までの距離
 	float			BaseAngle;					// 画像中心から頂点までの角度
 	int				Count;						// カウント
-	int				AnimPattern;				// テクスチャの何番分割
+	int				AnimPattern;				// 色
 	int				Alpha;						// 加算合成、透明合成用アルファ値
 	int				TextureType;				// エフェクトテクスチャの種類
 	bool			Use;						// 使用フラグ
 }EFFECT;
 
-// エフェクトコントローラー構造体
 typedef struct
 {
-	VERTEX_2D		VertexWk[Num_Vertex];		// 頂点情報格納ワーク
+	VERTEX_2D		VertexWk[NUM_VERTEX];		// 頂点情報格納ワーク
 	D3DXVECTOR3		Pos;						// 座標
 	int				Count;						// カウント
 	int				AnimPattern;				// テクスチャの何番分割
@@ -64,21 +59,13 @@ typedef struct
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 初期化処理
 HRESULT InitEffect(int InitState);
-// 終了処理
 void UninitEffect(void);
-// 更新処理
 void UpdateEffect(void);
-// 描画処理
 void DrawEffect(void);
-// エネミー死亡エフェクトの設置
 void SetEnemyDeadEffect(int Enemy_No);
-// ボス死亡エフェクトの設置
 void SetBossDeadEffect(void);
-// ボス背景エフェクトの設置
 void SetBossEffect(void);
-// ボムによって、エネミーの弾が消えるエフェクトの設置
 void SetBulletDeadEffect(D3DXVECTOR3 Pos);
 
 #endif

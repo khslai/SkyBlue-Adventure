@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 当たり判定処理 [CheckHit.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -20,15 +20,10 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// ゲーム難易度係数
 #define DifficultyRate (0.6f)
-// 攻撃する時のスコア
 #define AttackScore (490)
-// ボムが弾を削除する時のスコア
 #define ClearBulletScore (90)
-// エネミーを倒す時のスコア
 #define KillEnemyScore (9990)
-// ボスを倒す時のスコア
 #define KillBossScore (1000000)
 
 
@@ -41,18 +36,15 @@ bool CheckHitCP(D3DXVECTOR3 Object, float ObjectRadius, D3DXVECTOR3 Bullet, D3DX
 bool CheckHitBC(float CheckRange, D3DXVECTOR3 Object, D3DXVECTOR3 Bullet, D3DXVECTOR3 BulletPrePos, float BulletSpeed);
 // CR = サークル と 矩形(回転あり)
 bool CheckHitCR(D3DXVECTOR3 RotateCenter, float MoveAngle, D3DXVECTOR3 Object, float ObjectRadius);
-// 弾消失をチェックする
 bool CheckBulletDisappear(D3DXVECTOR3 Object, D3DXVECTOR3 Bullet, float BulletRadius);
-// プレイヤーが撃たれた処理
 void PlayerEvent(void);
-// エネミー死亡処理
 void EnemyDeadEvent(int Enemy_No);
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// レーザーの判定範囲（矩形）
 RECT Rect;
+const int PlayerItem[PlayerItem_Max] = { 2 };
 
 //=============================================================================
 // 当たり判定処理
@@ -594,6 +586,10 @@ bool CheckHitCP(D3DXVECTOR3 Object, float ObjectRadius, D3DXVECTOR3 Bullet, D3DX
 		// Vector_AとVector_Bの外積計算
 		Distance = fabsf(Vector_A.x * Vector_B.y - Vector_B.x * Vector_A.y);
 		Result = Distance <= ObjectRadius ? true : false;
+		/*if (Distance <= ObjectRadius)
+		{
+		Result = true;
+		}*/
 	}
 
 	return Result;
@@ -644,12 +640,20 @@ bool CheckHitBC(float CheckRange, D3DXVECTOR3 Object, D3DXVECTOR3 Bullet, D3DXVE
 		Distance = D3DXVec3LengthSq(&temp);
 		Result = Distance <= pow(CheckRange, 2) ? true : false;
 	}
+	//if (Distance <= pow((HitRadiusA + HitRadiusB), 2))
+	//{
+	//	Result = true;
+	//}
+	//else
+	//{
+	//	Result = false;
+	//}
 
 	return Result;
 }
 
 //=============================================================================
-// レーザーの判定範囲（矩形）を設置する
+// レーザー矩形の判定範囲を設置する
 //=============================================================================
 void SetLaserCheckRect(D3DXVECTOR3 Point_LeftUp, D3DXVECTOR3 Point_RightDown)
 {
@@ -722,7 +726,7 @@ bool CheckHitCR(D3DXVECTOR3 RotateCenter, float MoveAngle, D3DXVECTOR3 Object, f
 }
 
 //=============================================================================
-// 弾消失をチェックする
+// 弾消失のチェック
 //=============================================================================
 bool CheckBulletDisappear(D3DXVECTOR3 Object, D3DXVECTOR3 Bullet, float BulletRadius)
 {

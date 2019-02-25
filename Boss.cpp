@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ボス処理 [Boss.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -32,14 +32,11 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 頂点の作成
 HRESULT MakeBossVertex(void);
-HRESULT MakeBossLifeVertex(void);
-// 頂点座標の設定
 void SetBossVertex(void);
-void SetBossLifeVertex(void);
-// テクスチャ座標の設定
 void SetBossTexture(void);
+HRESULT MakeBossLifeVertex(void);
+void SetBossLifeVertex(void);
 void SetBossLifeTexture(void);
 
 
@@ -343,7 +340,7 @@ void SetBossTexture(void)
 }
 
 //=============================================================================
-// ボスの色の設定
+// 反射光の設定
 //=============================================================================
 void SetBossColor(int Color)
 {

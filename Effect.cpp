@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // エフェクト処理 [Effect.cpp]
-// Author：HAL東京　ゲーム学科1年生　頼凱興 
+// Author：TH_GP11_GP11B341_35_頼凱興
 //
 //=============================================================================
 #include "main.h"
@@ -15,22 +15,19 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-// エフェクトテクスチャの最大数
-#define EffectTexture_Max				(5)	
+#define EffectTexture_Max				(5)		// エフェクトテクスチャの最大数
 
-// エフェクトの種類
 enum
 {
-	EnemyDead,			// エネミー死亡
-	BossDead,			// ボス死亡
-	BulletDisappear,	// ボムによって、弾が消える
-	BossBackGround,		// ボスの背景エフェクト
+	EnemyDead,
+	BossDead,
+	BulletDisappear,
+	BossBackGround,
 };
 
-// エフェクトテクスチャの種類
 enum
 {
-	DeadEffect,	
+	DeadEffect,
 	BossDeadEffect,
 	BulletDead,
 	BossBG_Circle,
@@ -40,31 +37,21 @@ enum
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-// 頂点の作成
 HRESULT MakeEffectVertex(int Effect_No);
-// 頂点座標の設定
-void SetEffectVertex(int Effect_No);
-// テクスチャ座標の設定
 void SetEffectTexture(int Effect_No);
-// 色、透明度の設定
+void SetEffectVertex(int Effect_No);
 void SetEffectDiffuse(int Effect_No, int Alpha);
-// エフェクトを設置する
 void SetEffect(int EC_No, int EffectType);
-// エフェクトの計算
 void CalculateEffect(int Effect_No, int EffectType);
+
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-// テクスチャのポインタ
 LPDIRECT3DTEXTURE9 EffectTexture[EffectTexture_Max] = { NULL };
-// エフェクトコントローラー構造体
 EFFECTCOUNTER EffectCounter[EffectCounter_Max];
-// エフェクト構造体
 EFFECT Effect[Effect_Max];
-// テクスチャ半径
 static float BaseAngle[EffectTexture_Max] = { 0.0f };
-// 中心点と四頂点の成す角
 static float Radius[EffectTexture_Max] = { 0.0f };
 
 //=============================================================================
