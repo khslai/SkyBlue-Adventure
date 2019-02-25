@@ -1,13 +1,13 @@
 ﻿//=============================================================================
 //
 // プレイヤー処理 [Player.cpp]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #include "main.h"
 #include "Player.h"
 #include "Input.h"
-#include "Barrage.h"
+#include "PlayerBullet.h"
 #include "Bomb.h"
 #include "DebugTest.h"
 #include "BackGround.h"
@@ -16,32 +16,35 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+// アニメーションを切り替えるカウント
 #define AnimChangeCount		(15)
+// プレイヤーの移動速度
 #define PlayerSpeed			(7.0f)
+// 低速移動係数、移動速度は半分になる
 #define LowSpeed			(0.5f)
-
-
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 頂点の作成
 HRESULT MakePlayerVertex(void);
-void SetPlayerTexture(void);
+// 頂点座標の設定
 void SetPlayerVertex(void);
+// テクスチャ座標の設定
+void SetPlayerTexture(void);
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-LPDIRECT3DTEXTURE9			PlayerDebut_ATexture = NULL;
-LPDIRECT3DTEXTURE9			PlayerDebut_BTexture = NULL;
-static LPDIRECT3DTEXTURE9	Player_ATexture = NULL;
-static LPDIRECT3DTEXTURE9	Player_BTexture = NULL;
-static LPDIRECT3DTEXTURE9	PlayerOptionTexture = NULL;
-LPDIRECT3DTEXTURE9			HitPointTexture = NULL;
+// テクスチャのポインタ
+LPDIRECT3DTEXTURE9 PlayerDebut_ATexture = NULL;
+LPDIRECT3DTEXTURE9 PlayerDebut_BTexture = NULL;
+LPDIRECT3DTEXTURE9 Player_ATexture = NULL;
+LPDIRECT3DTEXTURE9 Player_BTexture = NULL;
+LPDIRECT3DTEXTURE9 PlayerOptionTexture = NULL;
+LPDIRECT3DTEXTURE9 HitPointTexture = NULL;
+// プレイヤー構造体
 PLAYER Player[Player_Max];
-
-
-
 
 //=============================================================================
 // 初期化処理
@@ -58,8 +61,7 @@ HRESULT InitPlayer(int InitState)
 	Player->HitRadius = 0.0f;
 	Player->BaseAngle = 0.0f;
 	Player->HP = PlayerHP_Max;
-	//Player->Power = PlayerStartPower;
-	Player->Power = 3.0f;
+	Player->Power = PlayerStartPower;
 	Player->BombNum = PlayerStartBomb;
 	if (GameStage == Stage_Title)
 	{
@@ -275,12 +277,12 @@ void UpdatePlayer(void)
 
 			// 低速モード
 			if (GetKeyboardPress(DIK_LSHIFT) || GetKeyboardPress(DIK_RSHIFT) ||
-				IsButtonPressed(0, BUTTON_L) || IsButtonPressed(0, BUTTON_R))
+				IsButtonPressed(0, BUTTON_LB) || IsButtonPressed(0, BUTTON_RB))
 			{
 				Player->LowSpeedMode = true;
 			}
 			else if (GetKeyboardRelease(DIK_LSHIFT) || GetKeyboardRelease(DIK_RSHIFT) ||
-				IsButtonReleased(0, BUTTON_L) || IsButtonReleased(0, BUTTON_R))
+				IsButtonReleased(0, BUTTON_LB) || IsButtonReleased(0, BUTTON_RB))
 			{
 				Player->LowSpeedMode = false;;
 			}
@@ -464,7 +466,7 @@ void DrawPlayer(void)
 				}
 
 				// ポリゴンの描画
-				Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_PLAYER, Player->VertexWk, sizeof(VERTEX_2D));
+				Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, Player->VertexWk, sizeof(VERTEX_2D));
 			}
 
 			// 当たりポイント
@@ -507,7 +509,7 @@ void DrawPlayer(void)
 		}
 
 		// ポリゴンの描画
-		Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_PLAYER, Player->VertexWk, sizeof(VERTEX_2D));
+		Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, Player->VertexWk, sizeof(VERTEX_2D));
 	}
 
 	return;

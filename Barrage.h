@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // エネミー弾幕ヘッダー [Barrage.h]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #ifndef _BARRAGE_H_
@@ -18,9 +18,13 @@
 #define Texture_Bullet_04		_T("data/Texture/Bullet/Bullet_04.png")
 #define Texture_Bullet_05		_T("data/Texture/Bullet/Bullet_05.png")
 
+//*****************************************************************************
+// 構造体定義
+//*****************************************************************************
+// 弾構造体
 typedef struct
 {
-	VERTEX_2D		VertexWk[NUM_VERTEX];	// 頂点情報格納ワーク
+	VERTEX_2D		VertexWk[Num_Vertex];	// 頂点情報格納ワーク
 	D3DXVECTOR3		Pos;					// 弾の座標
 	D3DXVECTOR3		PreviousPos;			// 1フレイム前の弾の座標
 	D3DXVECTOR3		Rot;					// テクスチャの回転角度
@@ -38,6 +42,7 @@ typedef struct
 	bool			DelayDisappear;			// 消失が遅れるかのフラグ
 }BULLET;
 
+// 弾幕構造体
 typedef struct
 {
 	BULLET			Bullet[EnemyBullet_Max];// 弾幕のバレット
@@ -51,12 +56,17 @@ typedef struct
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 初期化処理
 HRESULT InitBarrage(int InitState);
+// 終了処理
 void UninitBarrage(void);
+// 更新処理
 void UpdateBarrage(void);
+// 描画処理
 void DrawBarrage(void);
+// 弾幕の設置
 void SetBarrage(int Enemy_No);
+// 弾幕の情報を取得する
 BARRAGE *GetBarrage(int Barrage_No);
-void PlayerShot(void);
 
 #endif

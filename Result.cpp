@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // リザルト処理 [Result.cpp]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #include "main.h"
@@ -15,8 +15,9 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+// テキスト矩形の高さ
 #define RectHeight (100)
-// 描画始点
+// テキスト描画始点
 #define RectPos_X (112)
 #define RectPos_Y (84)
 #define LinePos_X (112)
@@ -33,33 +34,39 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 頂点の作成
 HRESULT MakeResultVertex(void);
-void SetResultTexture(void);
+// 頂点座標の設定
 void SetResultVertex(void);
+// テクスチャ座標の設定
+void SetResultTexture(void);
 
+// リザルトの状態
 enum
 {
-	Calculating,
-	ScoreCalOver,
-	Restart,
-	ToTitle,
-	RestartCheck,
-	ToTitleCheck,
+	Calculating,	// スコア計算中
+	ScoreCalOver,	// スコア計算終了
+	Restart,		// 最初から 
+	ToTitle,		// タイトルへ
+	RestartCheck,	// 最初からの確認
+	ToTitleCheck,	// タイトルへの確認
 };
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 // 頂点情報格納ワーク
-VERTEX_2D ResultBGVertexWk[NUM_VERTEX];
-static VERTEX_2D BlackScreenVertexWk[NUM_VERTEX];
+VERTEX_2D ResultBGVertexWk[Num_Vertex];
+static VERTEX_2D BlackScreenVertexWk[Num_Vertex];
 // テクスチャへのポインタ
 LPDIRECT3DTEXTURE9 ResultBGTexture = NULL;
+// 描画ラインへのポインタ
 LPD3DXLINE ResultLine = NULL;
 // 時間計算用カウント
 static int Count = 0;
 // スコア計算用
 static int TotalScore = 0;
+// リザルト選択肢
 static SELECT ResultSelect;
 
 

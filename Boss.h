@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ボスヘッダー [Boss.h]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #ifndef _BOSS_H_
@@ -23,10 +23,13 @@
 #define Texture_BossLife_Width		(32)
 #define Texture_BossLife_Height		(32)
 
-
+//*****************************************************************************
+// 構造体定義
+//*****************************************************************************
+// ボス構造体
 typedef struct
 {
-	VERTEX_2D		VertexWk[NUM_VERTEX];	// 頂点情報格納ワーク
+	VERTEX_2D		VertexWk[Num_Vertex];	// 頂点情報格納ワーク
 	D3DXVECTOR3		Pos;					// 座標
 	D3DXVECTOR3		BeforeMovePos;			// 移動始まる前の座標
 	D3DXVECTOR3		Velocity;				// 初速度
@@ -59,9 +62,10 @@ typedef struct
 	bool			BombDamage;				// ボムダメージ受けたフラグ
 }BOSS;
 
+// ボス生命値構造体
 typedef struct
 {
-	VERTEX_2D		VertexWk[NUM_VERTEX];	// 頂点情報格納ワーク
+	VERTEX_2D		VertexWk[Num_Vertex];	// 頂点情報格納ワーク
 	bool			Use;					// 使用かどうかのフラグ
 }BOSSLIFE;
 
@@ -69,13 +73,21 @@ typedef struct
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 初期化処理
 HRESULT InitBoss(int InitState);
+// 終了処理
 void UninitBoss(void);
+// 更新処理
 void UpdateBoss(void);
+// 描画処理
 void DrawBoss(void);
+// ボスの情報を取得する
 BOSS *GetBoss(void);
+// ボスの設置
 void SetBoss(void);
+// ボスの色の設定
 void SetBossColor(int Color);
+// ボスの移動位置設置
 void BossMove(D3DXVECTOR3 DestinationPos, float MoveTime);
 
 #endif

@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // タイトル画面処理 [Title.cpp]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #include "main.h"
@@ -16,9 +16,13 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+// 背景スクロール速度
 #define TitleBGSpeed (0.0003f)
+// 雲スクロール速度
 #define CloudSpeed (0.0002f)
+// テキスト矩形の高さ
 #define RectHeight (100)
+// テキスト表示の座標
 #define GameTitlePos_X (87)
 #define GameTitlePos_Y (200)
 #define GameStartPos_Y (384)
@@ -32,15 +36,15 @@
 #define YesPos_X (256)
 #define NoPos_X (768)
 
-
-
-
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 頂点の作成
 HRESULT MakeTitleVertex(void);
-void SetTitleTexture(void);
+// 頂点座標の設定
 void SetTitleVertex(void);
+// テクスチャ座標の設定
+void SetTitleTexture(void);
 
 //*****************************************************************************
 // グローバル変数
@@ -50,12 +54,19 @@ LPDIRECT3DTEXTURE9		TitleBGTexture = NULL;
 LPDIRECT3DTEXTURE9		GameTitleTexture = NULL;
 LPDIRECT3DTEXTURE9		LightTexture = NULL;
 LPDIRECT3DTEXTURE9		CloudTexture = NULL;
-VERTEX_2D				BlackScreenVertexWk[NUM_VERTEX];
+// 頂点情報格納ワーク
+VERTEX_2D				BlackScreenVertexWk[Num_Vertex];
+// タイトル背景構造体
 TITLE					TitleBG;
+// タイトル構造体
 TITLE					GameTitle;
+// 光構造体
 TITLE					Light;
+// 雲構造体
 TITLE					Cloud;
+// タイトル選択肢
 static SELECT			TitleSelect;
+// ゲーム難易度を選択しているフラグ
 bool					InSelectDifficulty;
 
 
@@ -360,16 +371,16 @@ void DrawTitle(void)
 	Device->SetTexture(0, TitleBGTexture);
 
 	// ポリゴンの描画
-	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_TITLE, TitleBG.VertexWk, sizeof(VERTEX_2D));
+	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, TitleBG.VertexWk, sizeof(VERTEX_2D));
 
 	// タイトル
 	Device->SetTexture(0, GameTitleTexture);
-	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_TITLE, GameTitle.VertexWk, sizeof(VERTEX_2D));
+	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, GameTitle.VertexWk, sizeof(VERTEX_2D));
 
 	// 光
 	Device->SetTexture(0, LightTexture);
 	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_TITLE, Light.VertexWk, sizeof(VERTEX_2D));
+	Device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, Num_Polygon, Light.VertexWk, sizeof(VERTEX_2D));
 	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	// 雲
@@ -461,7 +472,7 @@ void DrawTitle(void)
 }
 
 //=============================================================================
-// 描画処理
+// メニュー画面描画処理
 //=============================================================================
 void DrawTitleMenu(void)
 {
@@ -716,7 +727,7 @@ void SetTitleVertex(void)
 }
 
 //=============================================================================
-// ゲーム終了の答えを取得する
+// タイトル選択肢の情報を取得する
 //=============================================================================
 SELECT *GetTitleSelect(void)
 {

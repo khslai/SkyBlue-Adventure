@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ゲームオーバー処理 [GameOver.cpp]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #include "main.h"
@@ -18,7 +18,9 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+// テキスト矩形の高さ
 #define RectHeight (100)
+// テキスト表示の座標
 #define GameOverPos_Y (128)
 #define RestartPos_Y (384)
 #define ToTitlePos_Y (512)
@@ -30,29 +32,34 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 頂点の作成
 HRESULT MakeGameOverVertex(void);
-void SetGameOverTexture(void);
+// 頂点座標の設定
 void SetGameOverVertex(void);
+// テクスチャ座標の設定
+void SetGameOverTexture(void);
 
+// ゲームオーバーの状態
 enum GameOverSelectPhase
 {
-	BGMStart,
-	Display,
-	Restart,
-	ToTitle,
-	RestartCheck,
-	ToTitleCheck,
+	BGMStart,		// ゲームオーバーが始まる、BGMを鳴らす
+	Display,		// GAME OVER文字を表示
+	Restart,		// 最初から
+	ToTitle,		// タイトルへ
+	RestartCheck,	// 最初からの確認
+	ToTitleCheck,	// タイトルへの確認
 };
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 // 頂点情報格納ワーク
-static VERTEX_2D BlackScreenVertexWk[NUM_VERTEX];
+static VERTEX_2D BlackScreenVertexWk[Num_Vertex];
 // 時間計算用カウント
 static int Count = 0;
 // "GAME OVER"のアルファ値
 static int Alpha = 0;
+// ゲームオーバー選択肢
 static SELECT GameOverSelect;
 
 

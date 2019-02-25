@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ボム処理 [Bomb.cpp]
-// Author：TH_GP11_GP11B341_35_頼凱興
+// Author：HAL東京　ゲーム学科1年生　頼凱興 
 //
 //=============================================================================
 #include "main.h"
@@ -16,65 +16,77 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define ExtendSpeed_Phase1 (10.0f)
-#define ExtendSpeed_Phase2 (200.0f)
-#define BombDisappearCount (100)
-#define LockOnZoomRate (2.0f)
-#define BombBulletSpeed (8.0f)
+// ボムAタイプの拡大速度
+#define ExtendSpeed_Phase1	(10.0f)
+#define ExtendSpeed_Phase2	(200.0f)
+// ボムAタイプの消失カウント
+#define BombDisappearCount	(100)
+// ロックオンマークの拡大係数
+#define LockOnZoomRate		(2.0f)
+// ボムBタイプの弾の移動速度
+#define BombBulletSpeed		(8.0f)
 
-// ボムAタイプ
+// ボムAタイプ状態
 enum Bomb_A_Phase
 {
-	ShotBomb,
-	BombExtending,
-	ExtendOver,
+	ShotBomb,		// ボム発射
+	BombExtending,	// 拡大中
+	ExtendOver,		// 拡大終了
 };
 
-// ボムBタイプ
+// ボムBタイプの状態
 enum Bomb_B_Phase
 {
-	TargetLockOn,
-	Shot,
-	ShotOver,
+	TargetLockOn,	// ターゲットをロックオン
+	Shot,			// 弾発射
+	ShotOver,		// ボム終了
 };
-
-
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+// 頂点の作成
 HRESULT MakeBombVertex(void);
-void SetBombTexture(void);
-void SetBombVertex(void);
-void SetBombDiffuse(int Alpha);
 HRESULT MakeLockOnVertex(int LockOn_No);
-void SetLockOnTexture(int LockOn_No);
-void SetLockOnVertex(int LockOn_No);
 static HRESULT MakeBulletVertex(int Bullet_No);
-static void SetBulletTexture(int Bullet_No);
+// 頂点座標の設定
+void SetBombVertex(void);
+void SetLockOnVertex(int LockOn_No);
 static void SetBulletVertex(int Bullet_No);
+// テクスチャ座標の設定
+void SetBombTexture(void);
+void SetLockOnTexture(int LockOn_No);
+static void SetBulletTexture(int Bullet_No);
+// ボムAタイプの透明度を設置する
+void SetBombDiffuse(int Alpha);
+// ボムBタイプの弾を発射する
 void ShotBombBullet(void);
+// ボムBタイプの弾が命中する時の衝撃波を描画する
 void DrawImpactWave(D3DXVECTOR3 Center, float Radius, D3DCOLOR Color);
+// ボムAタイプの拡大範囲を確認する
 void CheckVertex(VERTEX_2D *Vtx);
-
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
+// テクスチャのポインタ
 LPDIRECT3DTEXTURE9 ShotBombTexture = NULL;
 LPDIRECT3DTEXTURE9 BombExtendTexture = NULL;
 LPDIRECT3DTEXTURE9 WhiteScreenTexture = NULL;
 LPDIRECT3DTEXTURE9 LockOnTexture = NULL;
 LPDIRECT3DTEXTURE9 BombBulletTexture = NULL;
-BOMB Bomb;
-VERTEX_2D BombExtendPixel[TextureDevideNum][TextureDevideNum][NUM_VERTEX];
+// ボムAタイプの拡大範囲を表示する頂点
+VERTEX_2D BombExtendPixel[TextureDevideNum][TextureDevideNum][Num_Vertex];
+// テクスチャ半径
 float LockOnRadius = 0.0f;
-float LockOnBaseAngle = 0.0f;
 float ShotBombRadius = 0.0f;
-float ShotBombBaseAngle = 0.0f;
 float BombExtendRadius = 0.0f;
+// 中心点と四頂点の成す角
+float LockOnBaseAngle = 0.0f;
+float ShotBombBaseAngle = 0.0f;
 float BombExtendBaseAngle = 0.0f;
-
+// ボム構造体
+BOMB Bomb;
 
 //=============================================================================
 // 初期化処理
@@ -633,7 +645,7 @@ void SetBomb_B(void)
 }
 
 //=============================================================================
-// ボムの弾を発射
+// ボムBタイプの弾を発射する
 //=============================================================================
 void ShotBombBullet(void)
 {
@@ -679,7 +691,7 @@ void ShotBombBullet(void)
 }
 
 //=============================================================================
-// 命中の衝撃波を描く
+// ボムBタイプの弾が命中する時の衝撃波を描画する
 //=============================================================================
 void DrawImpactWave(D3DXVECTOR3 Center, float Radius, D3DCOLOR Color)
 {
@@ -714,7 +726,7 @@ void DrawImpactWave(D3DXVECTOR3 Center, float Radius, D3DCOLOR Color)
 }
 
 //=============================================================================
-// ボムの拡大範囲を確認する
+// ボムAタイプの拡大範囲を確認する
 //=============================================================================
 void CheckVertex(VERTEX_2D *Vtx)
 {
@@ -826,7 +838,7 @@ void SetBombTexture(void)
 }
 
 //=============================================================================
-// 反射光の設定
+// ボムAタイプの透明度を設置する
 //=============================================================================
 void SetBombDiffuse(int Alpha)
 {
